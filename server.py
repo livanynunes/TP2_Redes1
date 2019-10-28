@@ -1,5 +1,7 @@
 import socket
 import sys
+from calendar import*;
+from time import*;
 
 #Importando biblioteca de threads
 from _thread import *
@@ -9,41 +11,45 @@ port = 8888
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-print("socket created")
+print("Socket criado!")
 
 try:
 	s.bind((host,port))
 except socket.error:
-	print("bind failed")
+	print("Bind falhou!")
 	sys.exit()
 
-print("Sock has been bounded")
+print("Conexão criada!")
 
 s.listen(10)
 
-print("Sock is ready")
+print("Sock está escutando...")
 
-def clientthread(conn):
-	welcome_message = "Welcome to the server. Type something and hit enter\n"
+def clientthread(conn,addr):
+	welcome_message = ("Bem vindo ao servidor, cliente "  + str(addr[0]) + "\n")
 	conn.send(welcome_message.encode())
+
+	time_message = asctime(localtime(time())) #teste 
+
+	conn.send(time_message.encode()) #teste
 
 	while True:
 		data = conn.recv(1024)
-		reply = "Ok "+ data.decode()
+		reply = "Cliente "+ str(addr[0]) +": "+ data.decode()
 		if not data:
+			print("Bye bye, " + str(addr[0]) + "\n")
 			break;
 		print(reply)
-		conn.sendall(data)
+		time_message = asctime(localtime(time()))
+		conn.sendall(time_message.encode()) #inunda rede
 	conn.close()
 
-#######################3
-
-
+#######################
 
 while 1:
 	conn, addr = s.accept()
 	print("Conectado com "+ addr[0] + ":" + str(addr[1]))
-	start_new_thread(clientthread,(conn,))
+	start_new_thread(clientthread,(conn,addr))
 
 
 s.close()
