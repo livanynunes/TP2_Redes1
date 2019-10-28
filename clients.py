@@ -18,7 +18,7 @@ print(welcome_message.decode())
 while True:
 
 	time_recv = c.recv(1024)
-	print('Atualizado para: ' + time_recv.decode())
+	print('As infos de data e hora : ' + time_recv.decode())
 
 	continuar = input('Deseja continuar [y/n]? : ')
 	if continuar =='y':

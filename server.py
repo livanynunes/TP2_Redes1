@@ -23,7 +23,7 @@ print("Conexão criada!")
 
 s.listen(10)
 
-print("Sock está escutando...")
+print("Servidor está escutando...")
 
 def clientthread(conn,addr):
 	welcome_message = ("Bem vindo ao servidor, cliente "  + str(addr[0]) + "\n")
