@@ -21,7 +21,7 @@ while True:
 	print('As infos de data e hora : ' + time_recv.decode())
 
 	continuar = input('Deseja continuar [y/n]? : ')
-	if continuar =='y' || continuar == '':
+	if continuar =='y' or continuar == '':
 		c.send("Atualizou a hora!".encode());
 		continue
 	else :
